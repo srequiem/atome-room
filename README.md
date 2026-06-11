@@ -23,26 +23,82 @@ git init && git add -A && git commit -m "ATOME — la chambre"
 
 ## Les 4 secrets
 
+Six secrets débloquent le pre-save :
+
 | Où | Quoi | Fichier |
 |---|---|---|
-| Sous l'oreiller | dent de lait + pièce → fragment d'ATOME (refrain final, 2:00→2:30 du master) | `public/audio/secret-oreiller.mp3` |
+| Sous l'oreiller | dent + pièce → DAHLIA NOIR, 0:39→0:49 | `public/audio/secret-dahlia.mp3` |
 | Boîte à chaussures sous le lit | tirages argentiques (la cover + 2 emplacements) | `public/img/cover-large.jpg` |
 | La radio sur la commode | extrait de l'outro de l'EP | `public/audio/secret-radio.mp3` |
-| La fenêtre (le cimetière) | le teaser vidéo | `public/video/teaser.mp4` *(à déposer)* |
+| La fenêtre (le cimetière, la lune) | « Comme il est loin », 0:09→0:39 | `public/audio/secret-fenetre.mp3` |
+| Le skateboard | ambiance République (manif), 0:38→fin | `public/audio/secret-skate.mp3` |
+| Le cube « ? » au sol | le single ATOME, 1:19→1:49 | `public/audio/secret-atome.mp3` |
 
-Bonus non comptés : la veilleuse (on/off, étoiles au plafond), la télé + console
-(mini jeu de skate rétro), le skate dressé contre le mur (clic → il vacille),
-les cubes alphabet sur le tapis.
+Bonus non comptés (ne débloquent rien, juste pour l'âme de la chambre) :
+- le **cadre photo** sur le chevet → agrandit la photo d'enfance ;
+- la **veilleuse** (on/off, étoiles au plafond) ;
+- la **télé + console** (mini-jeu de skate rétro, toujours allumée, clic = gros plan) ;
+- le **ballon de foot** oublié près du lit, les **cubes alphabet** sur le tapis.
+
+## Architecture
+
+Un composant = un fichier. Les patterns partagés sont des hooks réutilisables.
+
+```
+src/
+├── main.jsx                 point d'entrée React
+├── App.jsx                  orchestrateur : état du jeu + composition UI
+├── Experience.jsx           le Canvas R3F + composition de la scène 3D
+├── config.js                liens, assets, points caméra, secrets + libellés
+├── styles.css
+├── hooks/
+│   ├── useCursor.js         curseur "pointer" au survol (source unique)
+│   └── useExclusiveAudio.js un seul son à la fois (play / stop / stopIf)
+├── utils/
+│   ├── textures.js          fabriques de textures procédurales (canvas)
+│   ├── geometry.js          géométrie ondulée des rideaux
+│   └── skateGame.js         rendu canvas du mini-jeu de la TV
+├── scene/                   objets 3D, un par fichier
+│   ├── CameraRig.jsx        caméra : focus GSAP + parallax pointeur
+│   ├── Lights.jsx           ambiance, lune, veilleuse qui respire
+│   ├── Room.jsx             coque (sol/plafond/murs/porte/tapis) + cubes
+│   ├── LetterCube.jsx
+│   ├── MysteryCube.jsx      bonus : le « ? » qui joue ATOME
+│   ├── Bed.jsx              compose Pillow + Shoebox + FootballBoot
+│   ├── Pillow.jsx           secret : dent + pièce + fragment ATOME
+│   ├── Shoebox.jsx          secret : tirages argentiques
+│   ├── Football.jsx         décor : le ballon de foot
+│   ├── Nightstand.jsx       chevet + veilleuse + cadre photo
+│   ├── CeilingStars.jsx     étoiles projetées au plafond
+│   ├── Radio.jsx            secret : extrait outro
+│   ├── Television.jsx       TV + console + mini-jeu de skate
+│   ├── Skateboard.jsx
+│   ├── WindowWall.jsx       secret : fenêtre → « Comme il est loin »
+│   ├── Tombstone.jsx
+│   └── Graveyard.jsx        le cimetière + la lune, dehors
+└── ui/                      panneaux DOM, un par fichier
+    ├── Gate.jsx             écran d'entrée
+    ├── Hud.jsx              barre du haut
+    ├── Hint.jsx             invitation à fouiller
+    ├── MemoryCounter.jsx    les points "souvenirs n/4"
+    ├── Finale.jsx           panneau de fin (pre-save)
+    ├── PhotosOverlay.jsx    overlay des tirages (boîte)
+    └── PortraitOverlay.jsx  overlay de la photo (cadre)
+
+```
+
+Pour ajouter un objet interactif : crée `src/scene/MonObjet.jsx` (arrow function,
+`export default`), utilise `useCursor` depuis `hooks/`, et compose-le dans
+`Experience.jsx`. Pour un nouveau secret : ajoute son id dans `SECRET_IDS` et son
+libellé dans `SECRET_LABELS` (config.js), et appelle `markSecret('id')` au bon moment.
 
 ## À toi de compléter
 
 1. **`src/config.js`** → `PRESAVE_URL` (ton vrai lien pre-save) et `INSTAGRAM_URL`.
-2. **`public/video/teaser.mp4`** → ton teaser Kling (format vertical conseillé, le
-   site retombe sur une image de la forêt tant qu'il n'y est pas).
-3. **Photos argentiques** → ajoute 2 scans dans `public/img/` et remplace les deux
+2. **Photos argentiques** → ajoute 2 scans dans `public/img/` et remplace les deux
    blocs `print--empty` dans `src/App.jsx` par des `<img>` (même structure que la cover).
-4. **Fragment audio** → si tu préfères un autre passage que 2:00→2:30, dis-le-moi ou
-   re-découpe : `ffmpeg -ss 118 -t 30 -i master.wav -af "afade=t=in:st=0:d=1.2,afade=t=out:st=27.5:d=2.5" -b:a 192k secret-oreiller.mp3`
+3. **Fragments audio** → pour re-découper un passage (ex. l'extrait DAHLIA de l'oreiller) :
+   `ffmpeg -ss 39 -t 10 -i DAHLIA_NOIR.mp3 -af "afade=t=in:st=0:d=0.6,afade=t=out:st=8:d=2" -b:a 192k secret-dahlia.mp3`
 
 ## Notes importantes
 

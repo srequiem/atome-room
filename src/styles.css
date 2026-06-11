@@ -154,7 +154,7 @@ a:focus-visible {
 }
 
 .hud-id__title {
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-size: 26px;
   letter-spacing: 0.08em;
 }
@@ -200,7 +200,7 @@ a:focus-visible {
 .hint {
   position: fixed;
   left: 50%;
-  bottom: 96px;
+  bottom: 45%;
   transform: translateX(-50%);
   z-index: 20;
   font-style: italic;
@@ -469,6 +469,17 @@ a:focus-visible {
 
 .print--wide {
   max-width: 430px;
+}
+
+.print--solo {
+  max-width: 460px;
+  transform: rotate(-1deg);
+  margin: 0 auto;
+}
+
+.print--solo img {
+  max-height: 64vh;
+  width: auto;
 }
 
 .teaser-video {

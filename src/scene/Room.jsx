@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
-import { makeWallpaper, makeFloor, makeRug, makeLetterCube } from '../utils/textures.js'
+import { makeWallpaper, makeFloor, makeRug } from '../utils/textures.js'
+import LetterCube from './LetterCube.jsx'
+import MysteryCube from './MysteryCube.jsx'
 
 /*
   La chambre : 6 × 3 × 6 m, origine au centre du sol.
@@ -9,17 +11,7 @@ import { makeWallpaper, makeFloor, makeRug, makeLetterCube } from '../utils/text
 
 const WALL_THICKNESS = 0.12
 
-function LetterCube({ letter, position, rotation }) {
-  const tex = useMemo(() => makeLetterCube(letter), [letter])
-  return (
-    <mesh position={position} rotation={rotation} castShadow receiveShadow>
-      <boxGeometry args={[0.13, 0.13, 0.13]} />
-      <meshStandardMaterial map={tex} roughness={0.8} />
-    </mesh>
-  )
-}
-
-export default function Room() {
+const Room = ({ playExclusive, markSecret }) => {
   const wallTex = useMemo(() => makeWallpaper(), [])
   const floorTex = useMemo(() => makeFloor(), [])
   const rugTex = useMemo(() => makeRug(), [])
@@ -39,7 +31,7 @@ export default function Room() {
       </mesh>
 
       {/* Mur gauche */}
-      <mesh position={[-3 - WALL_THICKNESS / 2 + WALL_THICKNESS / 2, 1.5, 0]} castShadow receiveShadow>
+      <mesh position={[-3, 1.5, 0]} castShadow receiveShadow>
         <boxGeometry args={[WALL_THICKNESS, 3, 6]} />
         <meshStandardMaterial map={wallTex} roughness={0.95} />
       </mesh>
@@ -80,8 +72,10 @@ export default function Room() {
       <LetterCube letter="O" position={[0.38, 0.078, 0.42]} rotation={[0, 0.9, 0]} />
       <LetterCube letter="M" position={[-0.08, 0.078, 0.12]} rotation={[0, -0.7, 0]} />
       <LetterCube letter="E" position={[0.62, 0.078, 0.95]} rotation={[0, 0.2, 0]} />
-      {/* un cube tombé sur la tranche */}
-      <LetterCube letter="?" position={[-0.62, 0.078, 0.85]} rotation={[0, 1.2, Math.PI / 2]} />
+      {/* un cube tombé sur la tranche — le « ? » cache le single ATOME */}
+      <MysteryCube position={[-0.62, 0.078, 0.85]} rotation={[0, 1.2, Math.PI / 2]} playExclusive={playExclusive} markSecret={markSecret} />
     </group>
   )
 }
+
+export default Room

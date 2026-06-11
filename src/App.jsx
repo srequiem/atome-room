@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import Experience from './Experience.jsx'
-import { PRESAVE_URL, INSTAGRAM_URL, IMG, VIDEO_TEASER, SECRET_IDS } from './config.js'
+import { PRESAVE_URL, INSTAGRAM_URL, IMG, SECRET_IDS } from './config.js'
 
 const SECRET_LABELS = {
   oreiller: 'sous l’oreiller',
@@ -14,13 +14,12 @@ export default function App() {
   const [ready, setReady] = useState(false)
   const [focus, setFocus] = useState(null)
   const [secrets, setSecrets] = useState({})
-  const [overlay, setOverlay] = useState(null) // 'photos' | 'teaser' | null
+  const [overlay, setOverlay] = useState(null) // 'photos' | null
   const [audioKey, setAudioKey] = useState(null)
   const [muted, setMuted] = useState(false)
   const [hintGone, setHintGone] = useState(false)
   const [finaleDismissed, setFinaleDismissed] = useState(false)
   const playerRef = useRef(null)
-  const [videoOk, setVideoOk] = useState(true)
 
   // le hint s'efface tout seul au bout d'un moment
   useEffect(() => {
@@ -96,7 +95,6 @@ export default function App() {
       {/* ── Écran d'entrée ── */}
       <div className={`gate ${entered ? 'gate--hidden' : ''}`}>
         <p className="gate__artist">Sacha Requiem</p>
-        <h1 className="gate__title">ATOME</h1>
         <p className="gate__line">Il y a une chambre. Quelqu’un y a caché des choses.</p>
         <button
           className="gate__enter"
@@ -196,32 +194,6 @@ export default function App() {
                 <figcaption>tirage à venir</figcaption>
               </figure>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Overlay : par la fenêtre (teaser) ── */}
-      {overlay === 'teaser' && (
-        <div className="overlay" onClick={() => setOverlay(null)}>
-          <div className="overlay__inner" onClick={(e) => e.stopPropagation()}>
-            <button className="overlay__close" onClick={() => setOverlay(null)} aria-label="Fermer">×</button>
-            <p className="overlay__kicker">Par la fenêtre</p>
-            {videoOk ? (
-              <video
-                className="teaser-video"
-                src={VIDEO_TEASER}
-                autoPlay
-                loop
-                muted
-                playsInline
-                onError={() => setVideoOk(false)}
-              />
-            ) : (
-              <figure className="print print--wide">
-                <img src={IMG.teaserFallback} alt="Une silhouette court dans une forêt sombre." />
-                <figcaption>Le teaser arrive bientôt. Pour l’instant, il fait juste noir dehors.</figcaption>
-              </figure>
-            )}
           </div>
         </div>
       )}

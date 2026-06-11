@@ -10,16 +10,14 @@ export const INSTAGRAM_URL = 'https://instagram.com/sacharequiem'
 
 // Assets (dans /public)
 export const AUDIO = {
-  fragment: '/audio/secret-oreiller.mp3', // refrain final d'ATOME (2:00 → 2:30 du master)
+  fragment: '/audio/secret-oreiller.mp3', // ATOME, 1:19 → 1:49 — « perdre une dent ramenait des pièces »
   radio: '/audio/secret-radio.mp3',       // extrait outro
+  fenetre: '/audio/secret-fenetre.mp3',   // « Comme il est loin », 0:09 → 0:39
 }
 export const IMG = {
   coverLarge: '/img/cover-large.jpg',
   coverSmall: '/img/cover-small.jpg',
-  teaserFallback: '/img/teaser-fallback.jpg',
 }
-// Dépose ton teaser Kling ici quand il est prêt : public/video/teaser.mp4
-export const VIDEO_TEASER = '/video/teaser.mp4'
 
 // ─────────────────────────────────────────────────────────────
 // Caméra — vue de base + points de focus par objet
@@ -35,7 +33,7 @@ export const FOCUS = {
   radio:    { pos: [1.05, 1.35, -0.3], look: [2.5, 1.05, -1.3] },
   fenetre:  { pos: [0.7, 1.5, -0.7],  look: [0.7, 1.65, -3.2] },
   tv:       { pos: [0.7, 0.95, 0.9],  look: [2.35, 0.62, 0.9] },
-  skate:    { pos: [1.35, 1.05, -1.2], look: [2.3, 0.45, -2.9] },
+  skate:    { pos: [1.0, 1.1, -0.9], look: [1.72, 0.45, -2.85] },
 }
 
 // Les 4 secrets qui débloquent le pre-save

@@ -48,18 +48,18 @@ function Lights({ lampOn }) {
   useFrame(({ clock }) => {
     if (!lampRef.current) return
     // respiration de la veilleuse + extinction douce, une seule source de vérité
-    const target = lampOn ? 1.5 + Math.sin(clock.elapsedTime * 1.6) * 0.12 : 0
+    const target = lampOn ? 2.3 + Math.sin(clock.elapsedTime * 1.6) * 0.15 : 0
     lampRef.current.intensity += (target - lampRef.current.intensity) * 0.09
   })
 
   return (
     <>
-      <ambientLight intensity={0.35} color="#36487c" />
+      <ambientLight intensity={0.6} color="#44558c" />
       {/* la lune, par la fenêtre */}
       <directionalLight
         position={[3.2, 4.6, -7]}
-        intensity={0.55}
-        color="#7d93c8"
+        intensity={0.85}
+        color="#8da3d8"
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0015}
@@ -68,8 +68,8 @@ function Lights({ lampOn }) {
       <pointLight
         ref={lampRef}
         position={[-1.05, 1.05, -2.55]}
-        intensity={1.5}
-        distance={9}
+        intensity={2.3}
+        distance={10}
         decay={1.7}
         color="#ffb072"
         castShadow
@@ -88,18 +88,18 @@ export default function Experience({ focus, onFocus, markSecret, playExclusive, 
       shadows
       dpr={[1, 1.8]}
       camera={{ fov: 55, position: BASE_CAM.pos, near: 0.1, far: 40 }}
-      gl={{ antialias: true }}
+      gl={{ antialias: true, toneMappingExposure: 1.45 }}
       onCreated={() => onReady && onReady()}
     >
-      <color attach="background" args={['#04060c']} />
-      <fog attach="fog" args={['#070b16', 7.5, 17]} />
+      <color attach="background" args={['#070b16']} />
+      <fog attach="fog" args={['#0a1020', 8.5, 21]} />
 
       <CameraRig focus={focus} />
       <Lights lampOn={lampOn} />
 
       <Suspense fallback={null}>
         <Room />
-        <WindowWall onFocus={onFocus} markSecret={markSecret} onOverlay={onOverlay} />
+        <WindowWall onFocus={onFocus} markSecret={markSecret} playExclusive={playExclusive} />
         <Bed
           onFocus={onFocus}
           markSecret={markSecret}

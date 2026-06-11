@@ -35,7 +35,7 @@ export default function Room() {
       {/* Plafond */}
       <mesh rotation-x={Math.PI / 2} position={[0, 3, 0]} receiveShadow>
         <planeGeometry args={[6, 6]} />
-        <meshStandardMaterial color="#10172b" roughness={0.95} />
+        <meshStandardMaterial color="#1a2440" roughness={0.95} />
       </mesh>
 
       {/* Mur gauche */}
@@ -54,7 +54,7 @@ export default function Room() {
       <group position={[-2.92, 0, 1.6]}>
         <mesh position={[0, 1.04, 0]} rotation-y={Math.PI / 2} receiveShadow>
           <planeGeometry args={[0.92, 2.08]} />
-          <meshStandardMaterial color="#131a2e" roughness={0.8} />
+          <meshStandardMaterial color="#1a2340" roughness={0.8} />
         </mesh>
         {/* cadre */}
         <mesh position={[0.005, 2.12, 0]} rotation-y={Math.PI / 2}>

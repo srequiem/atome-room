@@ -33,10 +33,10 @@ function mulberry32(seed) {
 // ─── Papier peint : étoiles discrètes ton sur ton ───────────
 export function makeWallpaper() {
   const [c, ctx] = makeCanvas(256, 256)
-  ctx.fillStyle = '#18213a'
+  ctx.fillStyle = '#222c4e'
   ctx.fillRect(0, 0, 256, 256)
   const rnd = mulberry32(42)
-  ctx.fillStyle = '#1f2a4a'
+  ctx.fillStyle = '#2e3c6e'
   for (let i = 0; i < 22; i++) {
     const x = rnd() * 256
     const y = rnd() * 256
@@ -60,9 +60,9 @@ export function makeFloor() {
   const lath = 256 / 6
   for (let i = 0; i < 6; i++) {
     const shade = 0.85 + rnd() * 0.3
-    ctx.fillStyle = `rgb(${Math.round(43 * shade)}, ${Math.round(33 * shade)}, ${Math.round(24 * shade)})`
+    ctx.fillStyle = `rgb(${Math.round(58 * shade)}, ${Math.round(45 * shade)}, ${Math.round(33 * shade)})`
     ctx.fillRect(i * lath, 0, lath, 256)
-    ctx.fillStyle = 'rgba(10,7,4,0.7)'
+    ctx.fillStyle = 'rgba(14,10,6,0.7)'
     ctx.fillRect(i * lath, 0, 1.5, 256)
     // joints horizontaux décalés
     const y = rnd() * 256
@@ -125,28 +125,10 @@ export function makeLetterCube(letter) {
   return toTexture(c)
 }
 
-// ─── Artwork sous le skate ──────────────────────────────────
-export function makeDeckArt() {
-  const [c, ctx] = makeCanvas(256, 96)
-  ctx.fillStyle = '#a8231d'
-  ctx.fillRect(0, 0, 256, 96)
-  const rnd = mulberry32(99)
-  ctx.fillStyle = 'rgba(240,230,210,0.5)'
-  for (let i = 0; i < 12; i++) {
-    ctx.fillRect(rnd() * 256, rnd() * 96, 2, 2)
-  }
-  ctx.fillStyle = '#f2ead8'
-  ctx.font = 'italic 44px Georgia, serif'
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  ctx.fillText('ATOME', 128, 50)
-  return toTexture(c)
-}
-
 // ─── Tapis rond, anneaux concentriques ──────────────────────
 export function makeRug() {
   const [c, ctx] = makeCanvas(512, 512)
-  const rings = ['#202c4e', '#1b2542', '#243358', '#1b2542', '#16203a']
+  const rings = ['#2a3a66', '#243156', '#2f4274', '#243156', '#1d2a4e']
   rings.forEach((col, i) => {
     ctx.fillStyle = col
     ctx.beginPath()

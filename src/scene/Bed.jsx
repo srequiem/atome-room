@@ -136,23 +136,61 @@ export default function Bed({ onFocus, markSecret, playExclusive, stopIf, onOver
         onPointerOut={() => setHovB(false)}
       >
         <mesh castShadow receiveShadow>
-          <boxGeometry args={[0.36, 0.14, 0.24]} />
+          <boxGeometry args={[0.46, 0.12, 0.26]} />
           <meshStandardMaterial color="#8a7c66" roughness={0.95} />
         </mesh>
         {/* couvercle (pivot au bord arrière) */}
-        <group position={[0, 0.07, -0.12]}>
+        <group position={[0, 0.06, -0.13]}>
           <group ref={lidRef}>
-            <mesh position={[0, 0.012, 0.12]} castShadow>
-              <boxGeometry args={[0.38, 0.025, 0.26]} />
+            <mesh position={[0, 0.012, 0.13]} castShadow>
+              <boxGeometry args={[0.48, 0.025, 0.28]} />
               <meshStandardMaterial color="#7a6d58" roughness={0.95} />
             </mesh>
           </group>
         </group>
         {/* étiquette manuscrite */}
-        <mesh position={[0, 0.0, 0.121]}>
-          <planeGeometry args={[0.14, 0.07]} />
+        <mesh position={[0, 0.0, 0.131]}>
+          <planeGeometry args={[0.16, 0.06]} />
           <meshStandardMaterial color="#e6dcc4" roughness={0.9} />
         </mesh>
+      </group>
+
+      {/* ── Une chaussure de foot à crampons, oubliée là, couchée sur le flanc ── */}
+      <group position={[-1.0, 0.052, -0.42]} rotation={[-1.5, 0.45, 0.15]}>
+        {/* semelle */}
+        <mesh castShadow>
+          <boxGeometry args={[0.24, 0.022, 0.09]} />
+          <meshStandardMaterial color="#ded8c8" roughness={0.6} />
+        </mesh>
+        {/* avant-pied */}
+        <mesh position={[0.03, 0.045, 0]} castShadow>
+          <boxGeometry args={[0.16, 0.06, 0.084]} />
+          <meshStandardMaterial color="#17171c" roughness={0.55} />
+        </mesh>
+        {/* talon + cheville */}
+        <mesh position={[-0.075, 0.058, 0]} castShadow>
+          <boxGeometry args={[0.09, 0.09, 0.084]} />
+          <meshStandardMaterial color="#17171c" roughness={0.55} />
+        </mesh>
+        {/* lacets */}
+        {[0, 0.025, 0.05].map((dx, i) => (
+          <mesh key={i} position={[0.04 + dx, 0.078, 0]}>
+            <boxGeometry args={[0.008, 0.006, 0.05]} />
+            <meshStandardMaterial color="#ded8c8" roughness={0.8} />
+          </mesh>
+        ))}
+        {/* crampons, visibles puisque la chaussure est renversée */}
+        {[
+          [0.095, 0.028], [0.095, -0.028],
+          [0.05, 0.03], [0.05, -0.03],
+          [0, 0.03], [0, -0.03],
+          [-0.085, 0.024], [-0.085, -0.024],
+        ].map(([x, z], i) => (
+          <mesh key={i} position={[x, -0.018, z]}>
+            <cylinderGeometry args={[0.0085, 0.005, 0.018, 8]} />
+            <meshStandardMaterial color="#cfc9b8" roughness={0.5} />
+          </mesh>
+        ))}
       </group>
     </group>
   )

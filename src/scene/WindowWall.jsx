@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
+import { AUDIO } from '../config.js'
 import { makeWallpaper, makeNightSky } from '../utils/textures.js'
 
 function useCursor(hovered) {
@@ -53,7 +54,7 @@ function Tombstone({ position, rotation = 0, cross = false }) {
   )
 }
 
-export default function WindowWall({ onFocus, markSecret, onOverlay }) {
+export default function WindowWall({ onFocus, markSecret, playExclusive }) {
   const wallTex = useMemo(() => makeWallpaper(), [])
   const skyTex = useMemo(() => makeNightSky(), [])
   const curtainGeo = useMemo(() => curvedCurtainGeometry(), [])
@@ -66,16 +67,15 @@ export default function WindowWall({ onFocus, markSecret, onOverlay }) {
   function openWindow(e) {
     e.stopPropagation()
     onFocus('fenetre')
+    // l'extrait de « Comme il est loin » monte du cimetière
+    playExclusive('fenetre', AUDIO.fenetre)
     if (!opened.current) {
       opened.current = true
       gsap.to(curtainL.current.position, { x: WIN.cx - WIN.w / 2 - 0.13, duration: 1.1, ease: 'power3.inOut' })
       gsap.to(curtainR.current.position, { x: WIN.cx + WIN.w / 2 + 0.13, duration: 1.1, ease: 'power3.inOut' })
       gsap.to([curtainL.current.scale, curtainR.current.scale], { x: 0.55, duration: 1.1, ease: 'power3.inOut' })
     }
-    setTimeout(() => {
-      markSecret('fenetre')
-      onOverlay('teaser')
-    }, 1300)
+    setTimeout(() => markSecret('fenetre'), 1200)
   }
 
   // les 4 pans de mur autour de l'ouverture

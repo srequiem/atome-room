@@ -3,7 +3,6 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { AUDIO, IMG } from '../config.js'
-import { makeDeckArt } from '../utils/textures.js'
 
 function useCursor(hovered) {
   useEffect(() => {
@@ -307,7 +306,7 @@ function drawSkateGame(ctx, W, H, t) {
 }
 
 export function TVSetup({ onFocus }) {
-  const [on, setOn] = useState(false)
+  const [on, setOn] = useState(true) // allumée d'office — elle éclaire la pièce
   const [hov, setHov] = useState(false)
   useCursor(hov)
   const lightRef = useRef()
@@ -333,7 +332,7 @@ export function TVSetup({ onFocus }) {
       lastDraw.current = t
     }
     if (lightRef.current) {
-      lightRef.current.intensity = on ? 0.5 + Math.sin(t * 11) * 0.15 + Math.random() * 0.08 : 0
+      lightRef.current.intensity = on ? 0.68 + Math.sin(t * 11) * 0.14 + Math.random() * 0.07 : 0
     }
   })
 
@@ -413,64 +412,61 @@ export function TVSetup({ onFocus }) {
    SKATEBOARD — dressé contre le mur du fond, artwork ATOME
    visible. Clic : il vacille.
    ──────────────────────────────────────────────────────────── */
+/* ────────────────────────────────────────────────────────────
+   SKATEBOARD — posé contre le mur du fond, à côté de la fenêtre.
+   Rien de fancy : une planche, des trucks, 4 roues blanches
+   face à la pièce. Clic : il vacille.
+   ──────────────────────────────────────────────────────────── */
 export function Skateboard() {
   const [hov, setHov] = useState(false)
   useCursor(hov)
-  const innerRef = useRef()
-  const deckArt = useMemo(() => makeDeckArt(), [])
+  const ref = useRef()
 
   const materials = useMemo(() => {
-    const side = new THREE.MeshStandardMaterial({ color: '#7a4a2e', roughness: 0.7 })
+    const wood = new THREE.MeshStandardMaterial({ color: '#8a5a36', roughness: 0.65 })
     const grip = new THREE.MeshStandardMaterial({ color: '#16161a', roughness: 1 })
-    const art = new THREE.MeshStandardMaterial({ map: deckArt, roughness: 0.55 })
-    // ordre des faces d'une box : +x, -x, +y, -y, +z, -z
-    return [side, side, art, grip, side, side]
-  }, [deckArt])
+    // faces d'une box : +x, -x, +y, -y, +z (dessous, vers la pièce), -z (grip, contre le mur)
+    return [wood, wood, wood, wood, wood, grip]
+  }, [])
 
   function wobble(e) {
     e.stopPropagation()
-    if (!innerRef.current) return
+    if (!ref.current) return
     gsap.fromTo(
-      innerRef.current.rotation,
-      { x: 0 },
-      { x: 0.09, duration: 0.12, yoyo: true, repeat: 5, ease: 'sine.inOut' }
+      ref.current.rotation,
+      { z: 0 },
+      { z: 0.08, duration: 0.12, yoyo: true, repeat: 5, ease: 'sine.inOut' }
     )
   }
 
-  /*
-    Dressé contre le mur du fond : tail au sol, nose appuyé au mur,
-    l'artwork ATOME (face +y du deck) tourné vers la pièce.
-    rotation-y du parent oriente la face, rotation-z de l'enfant le redresse.
-  */
   return (
-    <group position={[2.25, 0, -2.8]} rotation-y={Math.PI / 2}>
-      <group
-        ref={innerRef}
-        position={[0, 0.38, 0]}
-        rotation-z={1.32}
-        onClick={wobble}
-        onPointerOver={() => setHov(true)}
-        onPointerOut={() => setHov(false)}
-      >
-        <mesh material={materials} castShadow>
-          <boxGeometry args={[0.78, 0.05, 0.21]} />
-        </mesh>
-        {/* trucks + roues (côté grip → vers le mur) */}
-        {[-0.24, 0.24].map((x, i) => (
-          <group key={i} position={[x, -0.05, 0]}>
-            <mesh>
-              <boxGeometry args={[0.05, 0.05, 0.1]} />
-              <meshStandardMaterial color="#8c8f96" metalness={0.7} roughness={0.4} />
+    <group
+      ref={ref}
+      position={[1.72, 0.395, -2.86]}
+      rotation-x={-0.18}
+      onClick={wobble}
+      onPointerOver={() => setHov(true)}
+      onPointerOut={() => setHov(false)}
+    >
+      {/* le deck, quasi vertical, légèrement appuyé contre le mur */}
+      <mesh material={materials} castShadow>
+        <boxGeometry args={[0.21, 0.78, 0.05]} />
+      </mesh>
+      {/* trucks + 4 roues blanches, face à la pièce */}
+      {[-0.24, 0.24].map((y, i) => (
+        <group key={i} position={[0, y, 0.055]}>
+          <mesh castShadow>
+            <boxGeometry args={[0.1, 0.06, 0.06]} />
+            <meshStandardMaterial color="#8c8f96" metalness={0.7} roughness={0.4} />
+          </mesh>
+          {[-0.075, 0.075].map((x, j) => (
+            <mesh key={j} position={[x, 0, 0.03]} rotation-z={Math.PI / 2}>
+              <cylinderGeometry args={[0.036, 0.036, 0.03, 16]} />
+              <meshStandardMaterial color="#efe9da" roughness={0.45} />
             </mesh>
-            {[-0.075, 0.075].map((z, j) => (
-              <mesh key={j} position={[0, -0.015, z]} rotation-x={Math.PI / 2}>
-                <cylinderGeometry args={[0.034, 0.034, 0.028, 14]} />
-                <meshStandardMaterial color="#e8e2d4" roughness={0.5} />
-              </mesh>
-            ))}
-          </group>
-        ))}
-      </group>
+          ))}
+        </group>
+      ))}
     </group>
   )
 }

@@ -9,13 +9,27 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
 // sensibilité du glissement tactile : ~un demi-écran pour aller d'un bord à l'autre
 const DRAG_GAIN = 1.8
 
+// amplitude du regard en tactile (mobile) — assez ample pour balayer toute la
+// pièce : viser la télé/radio à droite, le lit à gauche, le sol et le plafond.
+// (le desktop garde son parallax discret, inchangé)
+const TOUCH = {
+  posX: 0.5,   // translation latérale de la caméra
+  posY: 0.3,   // translation verticale
+  lookX: 2.3,  // rotation horizontale du regard (gauche ↔ droite)
+  lookY: 1.0,  // rotation verticale du regard (sol ↔ plafond)
+  focusScale: 0.35, // on calme l'amplitude quand un objet est en gros plan
+}
+
+// FOV : plus large en portrait (mobile) pour élargir le champ horizontal
+const FOV_PORTRAIT = 66
+const FOV_LANDSCAPE = 55
+
 /**
  * Une seule source de vérité (`cur`) : GSAP anime `cur` vers la cible
  * (vue de base ou point de focus), et useFrame applique `cur` + le regard.
  *
- * Desktop : parallax à la souris (position absolue du pointeur).
- * Mobile  : glisser-pour-regarder — le doigt fait pivoter la vue, et
- *           celle-ci reste où on l'a laissée (comme une photo panoramique).
+ * Desktop : parallax à la souris (position absolue du pointeur), inchangé.
+ * Mobile  : glisser-pour-regarder, ample, qui reste où on l'a laissé.
  */
 const CameraRig = ({ focus }) => {
   const { camera, gl } = useThree()
@@ -42,6 +56,19 @@ const CameraRig = ({ focus }) => {
     })
   }, [focus])
 
+  // ── FOV adapté à l'orientation (portrait = champ plus large) ──
+  useEffect(() => {
+    const applyFov = () => {
+      const portrait = window.innerHeight >= window.innerWidth
+      camera.fov = portrait ? FOV_PORTRAIT : FOV_LANDSCAPE
+      camera.updateProjectionMatrix()
+    }
+    applyFov()
+    window.addEventListener('resize', applyFov)
+    return () => window.removeEventListener('resize', applyFov)
+  }, [camera])
+
+  // ── glisser-pour-regarder (mobile) ──
   useEffect(() => {
     const el = gl.domElement
 
@@ -88,11 +115,21 @@ const CameraRig = ({ focus }) => {
 
   useFrame((state) => {
     const c = cur.current
-    const k = focus ? 0.06 : 0.22
-    const m = touchMode.current ? touchLook.current : state.pointer
 
-    camera.position.set(c.px + m.x * k, c.py + m.y * k * 0.5, c.pz)
-    lookVec.current.set(c.lx + m.x * k * 1.6, c.ly + m.y * k * 0.8, c.lz)
+    if (touchMode.current) {
+      // mobile : regard ample, translation douce, calmé en gros plan
+      const m = touchLook.current
+      const w = focus ? TOUCH.focusScale : 1
+      camera.position.set(c.px + m.x * TOUCH.posX * w, c.py + m.y * TOUCH.posY * w, c.pz)
+      lookVec.current.set(c.lx + m.x * TOUCH.lookX * w, c.ly + m.y * TOUCH.lookY * w, c.lz)
+    } else {
+      // desktop : parallax souris, strictement inchangé
+      const m = state.pointer
+      const k = focus ? 0.06 : 0.22
+      camera.position.set(c.px + m.x * k, c.py + m.y * k * 0.5, c.pz)
+      lookVec.current.set(c.lx + m.x * k * 1.6, c.ly + m.y * k * 0.8, c.lz)
+    }
+
     camera.lookAt(lookVec.current)
   })
 

@@ -17,12 +17,12 @@ const Lights = ({ lampOn }) => {
 
   return (
     <>
-      <ambientLight intensity={0.6} color="#44558c" />
+      <ambientLight intensity={1.9} color="#44558c" />
 
       {/* la lune, par la fenêtre */}
       <directionalLight
         position={[3.2, 4.6, -7]}
-        intensity={1.53}
+        intensity={2}
         color="#8da3d8"
         castShadow
         shadow-mapSize={[1024, 1024]}

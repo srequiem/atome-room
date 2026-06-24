@@ -1,8 +1,11 @@
+
 # ATOME — la chambre
 
-Site teaser interactif de **Sacha Requiem**. Une chambre d'enfant la nuit, explorable
-à la souris ou au doigt. Quatre souvenirs y sont cachés ; quand on les a tous trouvés,
-le pre-save apparaît.
+Ma chambre d'enfant la nuit, explorable à la souris ou au doigt.<br>
+J'y ai caché des extraits de mon EP, des souvenirs, un cadeay ! Bref, des parts de moi.
+
+<img width="1357" height="942" alt="Screenshot 2026-06-25 at 00 37 54" src="https://github.com/user-attachments/assets/88de217e-f691-476e-864b-ae53e4c1d9a9" />
+
 
 React 18 · @react-three/fiber · Three.js · GSAP · Vite.
 
@@ -13,23 +16,15 @@ npm install
 npm run dev
 ```
 
-## Déployer sur Vercel
+## Les 6 secrets
 
-```bash
-git init && git add -A && git commit -m "ATOME — la chambre"
-# pousse sur GitHub, puis importe le repo dans Vercel.
-# Framework preset : Vite (détecté automatiquement). Rien d'autre à configurer.
-```
-
-## Les 4 secrets
-
-Six secrets débloquent le pre-save :
+Six secrets débloquent le Golden Ticket !
 
 | Où | Quoi | Fichier |
 |---|---|---|
 | Sous l'oreiller | dent + pièce → DAHLIA NOIR, 0:39→0:49 | `public/audio/secret-dahlia.mp3` |
 | Boîte à chaussures sous le lit | tirages argentiques (la cover + 2 emplacements) | `public/img/cover-large.jpg` |
-| La radio sur la commode | extrait de l'outro de l'EP | `public/audio/secret-radio.mp3` |
+| La radio sur la commode | Monstre outro  | `public/audio/secret-radio.mp3` |
 | La fenêtre (le cimetière, la lune) | « Comme il est loin », 0:09→0:39 | `public/audio/secret-fenetre.mp3` |
 | Le skateboard | ambiance République (manif), 0:38→fin | `public/audio/secret-skate.mp3` |
 | Le cube « ? » au sol | le single ATOME, 1:19→1:49 | `public/audio/secret-atome.mp3` |
@@ -86,27 +81,10 @@ src/
     └── PortraitOverlay.jsx  overlay de la photo (cadre)
 
 ```
+## Note a moi même : 
 
-Pour ajouter un objet interactif : crée `src/scene/MonObjet.jsx` (arrow function,
-`export default`), utilise `useCursor` depuis `hooks/`, et compose-le dans
-`Experience.jsx`. Pour un nouveau secret : ajoute son id dans `SECRET_IDS` et son
+Pour ajouter un objet interactif : on crée `src/scene/MonObjet.jsx` (arrow function,
+`export default`), puis on utilise `useCursor` depuis `hooks/`, et on le compose dans
+`Experience.jsx`. Pour un nouveau secret rapido : ajoute son id dans `SECRET_IDS` et son
 libellé dans `SECRET_LABELS` (config.js), et appelle `markSecret('id')` au bon moment.
 
-## À toi de compléter
-
-1. **`src/config.js`** → `PRESAVE_URL` (ton vrai lien pre-save) et `INSTAGRAM_URL`.
-2. **Photos argentiques** → ajoute 2 scans dans `public/img/` et remplace les deux
-   blocs `print--empty` dans `src/App.jsx` par des `<img>` (même structure que la cover).
-3. **Fragments audio** → pour re-découper un passage (ex. l'extrait DAHLIA de l'oreiller) :
-   `ffmpeg -ss 39 -t 10 -i DAHLIA_NOIR.mp3 -af "afade=t=in:st=0:d=0.6,afade=t=out:st=8:d=2" -b:a 192k secret-dahlia.mp3`
-
-## Notes importantes
-
-- **Anti-leak** : le master complet n'est volontairement **jamais** embarqué dans le
-  site — uniquement des fragments mp3 de ~30 s. Ne dépose pas le wav dans `public/`.
-- **Jeu TV** : c'est un jeu de skate rétro *générique* (hommage à l'ère PS1), pas
-  Tony Hawk's Pro Skater — l'IP appartient à Activision, on ne peut pas l'utiliser
-  sur un site promo. Le clin d'œil reste lisible pour qui sait.
-- **Caméra** : les points de vue par objet se règlent dans `src/config.js` → `FOCUS`.
-- **Perf mobile** : DPR plafonné à 1.8, ombres légères, textures générées en canvas
-  (aucun gros asset 3D à télécharger).

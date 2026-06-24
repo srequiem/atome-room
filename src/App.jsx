@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { SECRET_IDS } from './config.js'
 
 import { useExclusiveAudio } from './hooks/useExclusiveAudio.js'
+import { useLanguage } from './i18n/LanguageContext.jsx'
 
 import Gate from './ui/Gate.jsx'
 import Hud from './ui/Hud.jsx'
@@ -16,6 +17,7 @@ import Experience from './Experience.jsx'
 const HINT_TIMEOUT = 9000
 
 const App = () => {
+  const { t } = useLanguage()
   const [entered, setEntered] = useState(false)
   const [ready, setReady] = useState(false)
   const [focus, setFocus] = useState(null)
@@ -83,7 +85,7 @@ const App = () => {
               onClick={handleGoBack}
               style={{ visibility: focus ? 'visible' : 'hidden', pointerEvents: focus ? 'auto' : 'none' }}
             >
-              ← reculer
+              ← {t.hud.back}
             </button>
             <MemoryCounter secrets={secrets} found={found} />
           </footer>

@@ -42,15 +42,7 @@ export const FOCUS = {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Secrets — les 4 trouvailles qui débloquent le pre-save
+// Secrets — les trouvailles qui débloquent le pre-save.
+// Les libellés traduits vivent dans src/i18n/strings.js (secrets).
 // ─────────────────────────────────────────────────────────────
 export const SECRET_IDS = ['oreiller', 'boite', 'radio', 'fenetre', 'skate', 'atome']
-
-export const SECRET_LABELS = {
-  oreiller: 'sous l’oreiller',
-  boite: 'la boîte à chaussures',
-  radio: 'la radio',
-  fenetre: 'par la fenêtre',
-  skate: 'le skateboard',
-  atome: 'le dé « ? »',
-}

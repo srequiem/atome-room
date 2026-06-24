@@ -205,7 +205,7 @@ a:focus-visible {
 
 .hud-btn {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   color: var(--ivory-dim);
   background: rgba(10, 15, 29, 0.55);
@@ -217,6 +217,12 @@ a:focus-visible {
   -webkit-backdrop-filter: blur(8px);
   transition: color 0.25s, border-color 0.25s;
   text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .hud-btn {
+    font-size: 11px;
+  }
 }
 
 .hud-btn:hover {
@@ -283,7 +289,7 @@ a:focus-visible {
   align-items: center;
   gap: 12px;
   position: fixed;
-  bottom: 18px;
+  /* bottom: 18px; */
   left: 50%;
   transform: translateX(-50%);
 }

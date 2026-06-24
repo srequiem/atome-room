@@ -1,7 +1,10 @@
 import { useRef, useEffect } from 'react'
+
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+
 import gsap from 'gsap'
+
 import { BASE_CAM, FOCUS } from '../config.js'
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v))

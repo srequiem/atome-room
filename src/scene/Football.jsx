@@ -1,11 +1,6 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 
-/**
- * Un ballon de foot classique noir & blanc, oublié près du lit.
- * Décor pur, non interactif. Les pentagones sombres sont peints
- * sur une texture canvas appliquée à la sphère.
- */
 const makeBallTexture = () => {
   const c = document.createElement('canvas')
   c.width = 256

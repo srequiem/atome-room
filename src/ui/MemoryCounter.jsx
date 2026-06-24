@@ -1,9 +1,9 @@
 import { SECRET_IDS } from '../config.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-/** Le compteur de souvenirs : un point par secret, allumé quand trouvé. */
-const MemoryCounter = ({ secrets, found }) => {
+const MemoryCounter = ({ secrets, found, onFinalize }) => {
   const { t } = useLanguage()
+
   return (
     <div className="counter">
       <span className="counter__dots">
@@ -12,6 +12,11 @@ const MemoryCounter = ({ secrets, found }) => {
         ))}
       </span>
       <span className="counter__label">{t.counter.found} · {found}/{SECRET_IDS.length}</span>
+      {found >= SECRET_IDS.length && (
+        <button className="counter__finalize" onClick={onFinalize}>
+          🎉
+        </button>
+      )}
     </div>
   )
 }

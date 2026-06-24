@@ -2,7 +2,8 @@ import { IMG } from '../config.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
 const PhotosOverlay = ({ onClose }) => {
-  const { t } = useLanguage()
+  const { t } = useLanguage();
+
   return (
     <div className="overlay" onClick={onClose}>
       <div className="overlay__inner" onClick={(e) => e.stopPropagation()}>

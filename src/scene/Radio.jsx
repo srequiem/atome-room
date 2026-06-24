@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
+
 import { useFrame } from '@react-three/fiber'
 import { AUDIO } from '../config.js'
+
 import { useCursor } from '../hooks/useCursor.js'
 
 /**
@@ -12,6 +14,7 @@ const DRAWER_HEIGHTS = [0.62, 0.4, 0.18]
 const Radio = ({ onFocus, markSecret, playing, playExclusive }) => {
   const [hovered, setHovered] = useState(false)
   useCursor(hovered)
+
   const needleRef = useRef()
 
   useFrame(({ clock }) => {

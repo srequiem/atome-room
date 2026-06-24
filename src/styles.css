@@ -1,9 +1,3 @@
-/* ─────────────────────────────────────────────────────────────
-   ATOME — la chambre
-   nuit profonde · ivoire · rouge "yeux rouges" · ambre veilleuse
-   display : Instrument Serif — utilitaire : IBM Plex Mono
-   ───────────────────────────────────────────────────────────── */
-
 :root {
   --night: #05070d;
   --ink: #0a0f1d;
@@ -57,7 +51,6 @@ a:focus-visible {
   outline-offset: 3px;
 }
 
-/* ── Écran d'entrée ───────────────────────────────────────── */
 .gate {
   position: fixed;
   inset: 0;
@@ -122,7 +115,6 @@ a:focus-visible {
   cursor: wait;
 }
 
-/* ── HUD haut ─────────────────────────────────────────────── */
 .hud-top {
   position: fixed;
   top: 0;
@@ -136,7 +128,7 @@ a:focus-visible {
   pointer-events: none;
 }
 
-.hud-top > * {
+.hud-top>* {
   pointer-events: auto;
 }
 
@@ -239,6 +231,7 @@ a:focus-visible {
   .hud-btn {
     font-size: 11px;
   }
+
   .hud-btn-back {
     font-size: 15px;
   }
@@ -271,7 +264,6 @@ a:focus-visible {
   box-shadow: 0 0 18px rgba(226, 59, 46, 0.35);
 }
 
-/* ── Hint ─────────────────────────────────────────────────── */
 .hint {
   position: fixed;
   left: 50%;
@@ -287,16 +279,17 @@ a:focus-visible {
 }
 
 @keyframes hintPulse {
+
   0%,
   100% {
     opacity: 0.45;
   }
+
   50% {
     opacity: 0.95;
   }
 }
 
-/* ── HUD bas ──────────────────────────────────────────────── */
 .hud-bottom {
   position: fixed;
   left: 0;
@@ -310,7 +303,7 @@ a:focus-visible {
   pointer-events: none;
 }
 
-.hud-bottom > * {
+.hud-bottom>* {
   pointer-events: auto;
 }
 
@@ -352,7 +345,6 @@ a:focus-visible {
   color: var(--ivory-dim);
 }
 
-/* ── Panneau final ────────────────────────────────────────── */
 .finale {
   position: fixed;
   left: 50%;
@@ -442,7 +434,6 @@ a:focus-visible {
   box-shadow: 0 0 26px rgba(226, 59, 46, 0.45);
 }
 
-/* ── Overlays ─────────────────────────────────────────────── */
 .overlay {
   position: fixed;
   inset: 0;
@@ -474,9 +465,7 @@ a:focus-visible {
 }
 
 .overlay__close {
-  position: absolute;
-  top: 0;
-  right: 8px;
+  position: relative;
   font-family: var(--serif);
   font-size: 40px;
   line-height: 1;
@@ -485,6 +474,14 @@ a:focus-visible {
   color: var(--ivory-dim);
   cursor: pointer;
   padding: 6px 10px;
+}
+
+@media (min-width: 950px) {
+  .overlay__close {
+    position: absolute;
+    top: 0;
+    right: 8px;
+  }
 }
 
 .overlay__close:hover {
@@ -500,7 +497,6 @@ a:focus-visible {
   margin-bottom: 28px;
 }
 
-/* tirages argentiques */
 .prints {
   display: flex;
   gap: 28px;
@@ -551,7 +547,7 @@ a:focus-visible {
 }
 
 .print--solo {
-  max-width: 460px;
+  max-width: max-content;
   transform: rotate(-1deg);
   margin: 0 auto;
 }
@@ -571,7 +567,6 @@ a:focus-visible {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
 }
 
-/* ── Crédit ───────────────────────────────────────────────── */
 .credit {
   position: fixed;
   right: 16px;
@@ -584,7 +579,6 @@ a:focus-visible {
   pointer-events: none;
 }
 
-/* ── Mobile ───────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .hud-top {
     padding: 14px 16px;
@@ -625,7 +619,6 @@ a:focus-visible {
   }
 }
 
-/* ── Accessibilité ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .hint {
     animation: none;

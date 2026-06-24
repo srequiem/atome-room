@@ -1,7 +1,6 @@
 import { PRESAVE_URL } from '../config.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-/** Barre du haut : identité, sélecteur de langue, raccourci pre-save, bouton son. */
 const Hud = ({ muted, onToggleMute, showPresave }) => {
   const { lang, setLang, t } = useLanguage()
 

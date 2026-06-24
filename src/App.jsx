@@ -93,7 +93,7 @@ const App = () => {
             >
               ← {t.hud.back}
             </button>
-            <MemoryCounter secrets={secrets} found={found} />
+            <MemoryCounter secrets={secrets} found={found} onFinalize={() => setFinaleDismissed(!finaleDismissed)} />
           </footer>
 
           {allFound && !overlay && !finaleDismissed && (

@@ -1,6 +1,5 @@
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-/** Écran d'entrée. La phrase porte tout ; on entre par le bouton. */
 const Gate = ({ ready, entered, onEnter }) => {
   const { t } = useLanguage()
   return (

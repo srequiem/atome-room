@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
+
 import { makeNightSky } from '../utils/textures.js'
+
 import Tombstone from './Tombstone.jsx'
 
 /**

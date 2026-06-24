@@ -1,9 +1,9 @@
 import { IMG } from '../config.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-/** Overlay plein écran : la photo d'enfance, en grand. */
 const PortraitOverlay = ({ onClose }) => {
   const { t } = useLanguage()
+
   return (
     <div className="overlay" onClick={onClose}>
       <div className="overlay__inner" onClick={(e) => e.stopPropagation()}>

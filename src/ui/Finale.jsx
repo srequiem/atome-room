@@ -4,13 +4,12 @@ import { INSTAGRAM_URL } from '../config.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import GoldenTicket from './GoldenTicket.jsx'
 
-// ── Panneau de fin : apparaît quand tous les souvenirs sont trouvés ──
 const Finale = ({ onDismiss }) => {
   const { t } = useLanguage()
+
   const [ticketNumber, setTicketNumber] = useState(null)
   const svgRef = useRef(null)
 
-  // ── util : numéro de billet décoratif (0001 → 9999) ──
   const generateTicketNumber = () =>
     String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0')
 
@@ -18,7 +17,6 @@ const Finale = ({ onDismiss }) => {
     if (!ticketNumber) setTicketNumber(generateTicketNumber())
   }
 
-  // ── télécharge le billet tel quel, en SVG ──
   const handleDownload = () => {
     if (!svgRef.current) return
     const xml = new XMLSerializer().serializeToString(svgRef.current)

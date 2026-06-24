@@ -1,11 +1,6 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-/**
- * Les étoiles que la veilleuse projette au plafond.
- * Apparaissent/disparaissent en fondu selon l'état de la veilleuse,
- * et tournent très lentement.
- */
 const STAR_COUNT = 80
 const LAMP_CENTER = { x: -0.95, z: -2.62 }
 

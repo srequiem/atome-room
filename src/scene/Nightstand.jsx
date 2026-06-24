@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react'
+
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
+
 import { IMG } from '../config.js'
+
 import { useCursor } from '../hooks/useCursor.js'
 
 /**
@@ -11,9 +14,12 @@ import { useCursor } from '../hooks/useCursor.js'
 const Nightstand = ({ lampOn, onToggleLamp, onOverlay }) => {
   const [lampHover, setLampHover] = useState(false)
   const [frameHover, setFrameHover] = useState(false)
+
   useCursor(lampHover || frameHover)
+
   const coverTex = useLoader(THREE.TextureLoader, IMG.coverSmall)
   coverTex.colorSpace = THREE.SRGBColorSpace
+  
   const glowRef = useRef()
 
   useFrame(({ clock }) => {

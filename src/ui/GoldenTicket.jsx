@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-// ── le billet, en SVG (forme billet de cinéma, nuit & or) ──
 const GoldenTicket = forwardRef(({ number }, ref) => {
   const { t } = useLanguage()
   const tk = t.ticket

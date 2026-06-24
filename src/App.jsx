@@ -87,7 +87,7 @@ const App = () => {
 
           <footer className="hud-bottom">
             <button
-              className="hud-btn"
+              className="hud-btn-back hud-btn-back--red"
               onClick={handleGoBack}
               style={{ visibility: focus ? 'visible' : 'hidden', pointerEvents: focus ? 'auto' : 'none' }}
             >

@@ -24,7 +24,7 @@ const Experience = ({ focus, onFocus, markSecret, playExclusive, stopIf, audioKe
       shadows
       dpr={[1, 1.8]}
       camera={{ fov: 55, position: BASE_CAM.pos, near: 0.1, far: 40 }}
-      gl={{ antialias: true, toneMappingExposure: 1.45 }}
+      gl={{ antialias: true, toneMappingExposure: 2.5 }}
       onCreated={() => onReady && onReady()}
     >
       <color attach="background" args={['#070b16']} />

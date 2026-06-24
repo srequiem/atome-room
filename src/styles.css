@@ -219,9 +219,28 @@ a:focus-visible {
   text-decoration: none;
 }
 
+.hud-btn-back {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: var(--ivory-dim);
+  background: rgba(10, 15, 29, 0.55);
+  border: 1px solid rgba(242, 234, 216, 0.18);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.25s, border-color 0.25s;
+  text-decoration: none;
+}
+
 @media (min-width: 640px) {
   .hud-btn {
     font-size: 11px;
+  }
+  .hud-btn-back {
+    font-size: 15px;
   }
 }
 
@@ -236,6 +255,17 @@ a:focus-visible {
 }
 
 .hud-btn--red:hover {
+  color: #fff;
+  border-color: var(--red);
+  box-shadow: 0 0 18px rgba(226, 59, 46, 0.35);
+}
+
+.hud-btn-back--red {
+  color: #ff8d82;
+  border-color: rgba(226, 59, 46, 0.55);
+}
+
+.hud-btn-back--red:hover {
   color: #fff;
   border-color: var(--red);
   box-shadow: 0 0 18px rgba(226, 59, 46, 0.35);

@@ -11,7 +11,7 @@ const Lights = ({ lampOn }) => {
 
   useFrame(({ clock }) => {
     if (!lampRef.current) return
-    const target = lampOn ? 2.3 + Math.sin(clock.elapsedTime * 1.6) * 0.15 : 0
+    const target = lampOn ? 2.53 + Math.sin(clock.elapsedTime * 1.6) * 0.15 : 0
     lampRef.current.intensity += (target - lampRef.current.intensity) * 0.09
   })
 
@@ -22,7 +22,7 @@ const Lights = ({ lampOn }) => {
       {/* la lune, par la fenêtre */}
       <directionalLight
         position={[3.2, 4.6, -7]}
-        intensity={0.85}
+        intensity={1.53}
         color="#8da3d8"
         castShadow
         shadow-mapSize={[1024, 1024]}
@@ -33,7 +33,7 @@ const Lights = ({ lampOn }) => {
       <pointLight
         ref={lampRef}
         position={[-1.05, 1.05, -2.55]}
-        intensity={2.3}
+        intensity={2.53}
         distance={10}
         decay={1.7}
         color="#ffb072"

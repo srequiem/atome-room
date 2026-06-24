@@ -19,6 +19,9 @@ export const AUDIO = {
 export const IMG = {
   coverLarge: '/img/cover-large.jpg',
   coverSmall: '/img/cover-small.jpg',
+  coverBrotherLarge: '/img/cover-brother-large.jpg',
+  coverCeSoirLarge: '/img/cover-cesoir-large.jpg',
+  coverMauvaisGarconLarge: '/img/cover-mauvais-garcon-large.jpg',
 }
 
 // ─────────────────────────────────────────────────────────────

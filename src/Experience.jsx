@@ -1,6 +1,8 @@
 import { Suspense, useState } from 'react'
+
 import { Canvas } from '@react-three/fiber'
 import { BASE_CAM } from './config.js'
+
 import CameraRig from './scene/CameraRig.jsx'
 import Lights from './scene/Lights.jsx'
 import Room from './scene/Room.jsx'
@@ -11,6 +13,8 @@ import CeilingStars from './scene/CeilingStars.jsx'
 import Radio from './scene/Radio.jsx'
 import Television from './scene/Television.jsx'
 import Skateboard from './scene/Skateboard.jsx'
+
+
 
 const Experience = ({ focus, onFocus, markSecret, playExclusive, stopIf, audioKey, onOverlay, onReady }) => {
   const [lampOn, setLampOn] = useState(true)

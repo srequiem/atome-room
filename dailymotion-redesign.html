@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dailymotion — Redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,700&family=Barlow+Condensed:ital,wght@0,700;1,900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  background:#f7f7f7;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* ── AVATARS ── */
+.av{border-radius:50%;flex-shrink:0}
+.av-sm{width:26px;height:26px}
+.av-md{width:32px;height:32px}
+.av1{background:linear-gradient(135deg,#ff0057,#ff6b6b)}
+.av2{background:linear-gradient(135deg,#7209b7,#b5179e)}
+.av3{background:linear-gradient(135deg,#0096c7,#023e8a)}
+.av4{background:linear-gradient(135deg,#40916c,#1b4332)}
+.av5{background:linear-gradient(135deg,#f77f00,#fcbf49)}
+
+/* ── GRADIENT PALETTES ── */
+.g1{background:linear-gradient(160deg,#0f3460 0%,#533483 100%)}
+.g2{background:linear-gradient(160deg,#b5179e 0%,#560bad 100%)}
+.g3{background:linear-gradient(160deg,#1b4332 0%,#40916c 100%)}
+.g4{background:linear-gradient(160deg,#e63946 0%,#6d0e14 100%)}
+.g5{background:linear-gradient(160deg,#c77dff 0%,#3a0ca3 100%)}
+.g6{background:linear-gradient(160deg,#264653 0%,#2a9d8f 100%)}
+.g7{background:linear-gradient(160deg,#023e8a 0%,#0096c7 100%)}
+.g8{background:linear-gradient(160deg,#6a0572 0%,#c77dff 100%)}
+.g9{background:linear-gradient(160deg,#212529 0%,#343a40 100%)}
+.g10{background:linear-gradient(160deg,#134e4a 0%,#10b981 100%)}
+.g11{background:linear-gradient(160deg,#4361ee 0%,#4cc9f0 100%)}
+.g12{background:linear-gradient(160deg,#be123c 0%,#fda4af 100%)}
+
+/* ══════════════════════════════════════════
+   TOPBAR — Style D3 (Editorial Light)
+   full width · logo | search centré | actions + pills
+══════════════════════════════════════════ */
+.topbar{
+  flex-shrink:0;
+  background:rgba(249,249,249,.97);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid #eeeeee;
+  padding:0 36px;
+  position:sticky;top:0;z-index:100;
+}
+.topbar-row1{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  height:62px;
+  gap:16px;
+}
+.topbar-logo{
+  font-size:20px;letter-spacing:-.025em;color:#0a0a0a;
+  font-weight:300;white-space:nowrap;
+}
+.topbar-logo strong{font-weight:800}
+.topbar-search-wrap{display:flex;justify-content:center}
+.topbar-search{
+  width:100%;max-width:420px;background:#eeeeee;
+  border-radius:20px;padding:9px 18px;font-size:13px;
+  color:#999;font-family:inherit;
+}
+.topbar-actions{display:flex;gap:8px;justify-content:flex-end;white-space:nowrap}
+.topbar-btn{
+  padding:8px 16px;border-radius:20px;font-size:12px;
+  font-weight:600;cursor:pointer;font-family:inherit;border:none;
+}
+.btn-ghost{background:none;border:1px solid #ddd;color:#666}
+.btn-pink{background:#ff0057;color:#fff}
+
+.topbar-pills{
+  display:flex;gap:6px;overflow-x:auto;padding:10px 0;
+  scrollbar-width:none;
+}
+.topbar-pills::-webkit-scrollbar{display:none}
+.pill{
+  padding:5px 16px;border-radius:20px;font-size:12px;font-weight:500;
+  white-space:nowrap;cursor:pointer;border:1px solid #e0e0e0;
+  color:#666;background:#fff;transition:all .15s;
+}
+.pill:hover{border-color:#bbb;color:#111}
+.pill.on{background:#0a0a0a;color:#fff;border-color:#0a0a0a}
+
+/* ══════════════════════════════════════════
+   LAYOUT — sidebar + main
+══════════════════════════════════════════ */
+.layout{
+  display:flex;
+  flex:1;
+  overflow:hidden;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR — Style D1 (Soft Evolution)
+   sans logo (le header l'a déjà)
+══════════════════════════════════════════ */
+.sidebar{
+  width:220px;min-width:220px;
+  background:#fff;border-right:1px solid #ededed;
+  display:flex;flex-direction:column;
+  padding:16px 0;overflow-y:auto;
+}
+.sidebar-nav{padding:0 10px;margin-bottom:16px}
+.sidebar-nav a{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 12px;border-radius:8px;
+  font-size:13px;font-weight:500;color:#666;
+  text-decoration:none;cursor:pointer;
+  transition:background .15s;margin-bottom:2px;
+}
+.sidebar-nav a:hover{background:#f5f5f5;color:#111}
+.sidebar-nav a.on{background:#fff0f5;color:#ff0057}
+.sidebar-nav .ic{font-size:14px;width:18px;text-align:center}
+
+.sidebar-login-wrap{padding:0 20px 16px}
+.sidebar-login{
+  width:100%;padding:9px;background:#ff0057;color:#fff;
+  border:none;border-radius:20px;font-family:inherit;
+  font-size:13px;font-weight:600;cursor:pointer;
+}
+.sidebar-divider{height:1px;background:#ededed;margin:4px 20px 12px}
+.sidebar-lbl{
+  padding:0 20px 8px;font-size:10px;font-weight:700;
+  color:#aaa;letter-spacing:.08em;text-transform:uppercase;
+}
+.sidebar-creators{padding:0 10px;margin-bottom:4px}
+.sidebar-creator{
+  display:flex;align-items:center;gap:9px;
+  padding:6px 12px;border-radius:8px;cursor:pointer;
+  transition:background .15s;
+}
+.sidebar-creator:hover{background:#f5f5f5}
+.creator-name{font-size:12px;font-weight:500;color:#444}
+.creator-check{color:#ff0057;font-size:9px}
+
+.sidebar-cats{padding:0 10px}
+.sidebar-cat{
+  display:flex;align-items:center;gap:9px;padding:7px 12px;
+  border-radius:8px;font-size:13px;color:#666;
+  cursor:pointer;transition:background .15s;
+}
+.sidebar-cat:hover{background:#f5f5f5;color:#111}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ══════════════════════════════════════════
+   MAIN CONTENT — grille du user
+══════════════════════════════════════════ */
+.main-area{flex:1;overflow-y:auto}
+.main-content{padding:22px}
+
+/* landscape cards */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{cursor:pointer}
+.thumb-l{
+  width:100%;aspect-ratio:16/9;border-radius:8px;
+  position:relative;overflow:hidden;
+}
+.thumb-l::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 55%);
+}
+.dur{
+  position:absolute;bottom:7px;right:7px;z-index:2;
+  background:rgba(0,0,0,.78);color:#fff;font-size:10px;
+  font-weight:600;padding:2px 6px;border-radius:3px;font-family:inherit;
+}
+.card-info{display:flex;gap:9px;padding-top:9px}
+.card-text{flex:1;min-width:0}
+.card-creator{font-size:11px;color:#888;margin-bottom:3px}
+.card-title{font-size:13px;font-weight:600;color:#111;line-height:1.3;margin-bottom:3px}
+</style>
+</head>
+<body>
+
+<!-- ══ TOPBAR (D3 — Editorial Light) ══ -->
+<header class="topbar">
+  <div class="topbar-row1">
+    <div class="topbar-logo">daily<strong>motion</strong></div>
+    <div class="topbar-search-wrap">
+      <div class="topbar-search">🔍 Rechercher des vidéos</div>
+    </div>
+    <div class="topbar-actions">
+      <button class="topbar-btn btn-ghost">+ Importer</button>
+      <button class="topbar-btn btn-pink">Connexion</button>
+    </div>
+  </div>
+  <div class="topbar-pills">
+    <div class="pill on">Pour vous</div>
+    <div class="pill">Tendances</div>
+    <div class="pill">Actualités</div>
+    <div class="pill">Sports</div>
+    <div class="pill">Court métrage</div>
+    <div class="pill">TV &amp; Séries</div>
+    <div class="pill">Fun</div>
+    <div class="pill">Musique</div>
+    <div class="pill">Documentaires</div>
+    <div class="pill">Jeux vidéo</div>
+  </div>
+</header>
+
+<!-- ══ LAYOUT ══ -->
+<div class="layout">
+
+  <!-- SIDEBAR (D1 — Soft Evolution, sans logo) -->
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a class="on"><span class="ic">⊙</span>Pour vous</a>
+      <a><span class="ic">◎</span>Explorer</a>
+      <a><span class="ic">◈</span>Abonnements</a>
+    </nav>
+    <div class="sidebar-login-wrap">
+      <button class="sidebar-login">Se connecter</button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-lbl">Populaire</div>
+    <div class="sidebar-creators">
+      <div class="sidebar-creator">
+        <div class="av av-sm av1"></div>
+        <span class="creator-name">Tibo InShape <span class="creator-check">✓</span></span>
+      </div>
+      <div class="sidebar-creator">
+        <div class="av av-sm av2"></div>
+        <span class="creator-name">Batzair <span class="creator-check">✓</span></span>
+      </div>
+      <div class="sidebar-creator">
+        <div class="av av-sm av3"></div>
+        <span class="creator-name">DoisJeLeVoir <span class="creator-check">✓</span></span>
+      </div>
+      <div class="sidebar-creator">
+        <div class="av av-sm av4"></div>
+        <span class="creator-name">Adrien Fey <span class="creator-check">✓</span></span>
+      </div>
+      <div class="sidebar-creator">
+        <div class="av av-sm av5"></div>
+        <span class="creator-name">OnTime <span class="creator-check">✓</span></span>
+      </div>
+    </div>
+    <div class="sidebar-divider" style="margin-top:14px"></div>
+    <div class="sidebar-lbl">Catégories</div>
+    <div class="sidebar-cats">
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#e63946"></span>Actualités</div>
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#7209b7"></span>Court métrage</div>
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#0096c7"></span>TV</div>
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#f77f00"></span>Fun</div>
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#40916c"></span>Sports</div>
+      <div class="sidebar-cat"><span class="cat-dot" style="background:#ff0057"></span>Musique</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT — grille du user (inchangée) -->
+  <main class="main-area">
+    <div class="main-content" style="height:1000px">
+      <div class="cards-grid">
+
+        <div class="card" style="height:339px">
+          <div class="thumb-l g1"><span class="dur">4:32</span></div>
+          <div class="card-info">
+            <div class="av av-md av1"></div>
+            <div class="card-text">
+              <div class="card-creator">Tibo InShape ✓</div>
+              <div class="card-title">Day 41/365 — push-up challenge</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="height:451px">
+          <div class="thumb-l g2"><span class="dur">12:47</span></div>
+          <div class="card-info">
+            <div class="av av-md av2"></div>
+            <div class="card-text">
+              <div class="card-creator">Batzair ✓</div>
+              <div class="card-title">J'arrête un tournage à cause des voisins</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="height:309px">
+          <div class="thumb-l g3"><span class="dur">8:20</span></div>
+          <div class="card-info">
+            <div class="av av-md av3"></div>
+            <div class="card-text">
+              <div class="card-creator">Montreux Comedy ✓</div>
+              <div class="card-title">Fabien Olicard — Le paquet de mouchoirs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:-123px">
+          <div class="thumb-l g7"><span class="dur">6:11</span></div>
+          <div class="card-info">
+            <div class="av av-md av4"></div>
+            <div class="card-text">
+              <div class="card-creator">Adrien Fey ✓</div>
+              <div class="card-title">Ce télescope intelligent va tout changer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:-14px;height:219px">
+          <div class="thumb-l g5"><span class="dur">3:58</span></div>
+          <div class="card-info">
+            <div class="av av-md av5"></div>
+            <div class="card-text">
+              <div class="card-creator">OnTime ✓</div>
+              <div class="card-title">Comment la rendre heureuse</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb-l g9" style="margin-top:-156px;height:127px"><span class="dur">22:15</span></div>
+          <div class="card-info">
+            <div class="av av-md av1"></div>
+            <div class="card-text">
+              <div class="card-creator">Courrier International ✓</div>
+              <div class="card-title">HOTD S3 — Nouvelles images et analyse</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding-top:162px">
+          <div class="thumb-l g4" style="margin-top:-297px;height:327px"><span class="dur">02:03</span></div>
+          <div class="card-info">
+            <div class="av av-md av1"></div>
+            <div class="card-text">
+              <div class="card-creator">Courrier International ✓</div>
+              <div class="card-title">HOTD S3 — Nouvelles images et analyse</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding-top:274px">
+          <div class="thumb-l g3" style="margin-top:-451px;height:327px"><span class="dur">02:03</span></div>
+          <div class="card-info">
+            <div class="av av-md av1"></div>
+            <div class="card-text">
+              <div class="card-creator">Courrier International ✓</div>
+              <div class="card-title">HOTD S3 — Nouvelles images et analyse</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding-top:162px">
+          <div class="thumb-l g1" style="margin-top:-513px;height:327px"><span class="dur">02:03</span></div>
+          <div class="card-info">
+            <div class="av av-md av1"></div>
+            <div class="card-text">
+              <div class="card-creator">Courrier International ✓</div>
+              <div class="card-title">HOTD S3 — Nouvelles images et analyse</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

@@ -78,13 +78,13 @@ const App = () => {
           {!hintGone && <Hint />}
 
           <footer className="hud-bottom">
-            {focus ? (
-              <button className="hud-btn" onClick={handleGoBack}>
-                ← reculer
-              </button>
-            ) : (
-              <span />
-            )}
+            <button
+              className="hud-btn"
+              onClick={handleGoBack}
+              style={{ visibility: focus ? 'visible' : 'hidden', pointerEvents: focus ? 'auto' : 'none' }}
+            >
+              ← reculer
+            </button>
             <MemoryCounter secrets={secrets} found={found} />
           </footer>
 
@@ -97,7 +97,7 @@ const App = () => {
       {overlay === 'photos' && <PhotosOverlay onClose={() => setOverlay(null)} />}
       {overlay === 'portrait' && <PortraitOverlay onClose={() => setOverlay(null)} />}
 
-      <p className="credit">© Sacha Requiem - Atome's room 2026</p>
+      <p className="credit">© atome's room 2026</p>
     </div>
   )
 }

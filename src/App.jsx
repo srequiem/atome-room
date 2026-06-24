@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
-import { SECRET_IDS } from './config.js'
+import { SECRET_IDS, IMG } from './config.js'
 
 import { useExclusiveAudio } from './hooks/useExclusiveAudio.js'
+import { useImagePreload } from './hooks/useImagePreload.js'
 import { useLanguage } from './i18n/LanguageContext.jsx'
 
 import Gate from './ui/Gate.jsx'
@@ -28,6 +29,11 @@ const App = () => {
   const [finaleDismissed, setFinaleDismissed] = useState(false)
 
   const { audioKey, play: playExclusive, stopIf } = useExclusiveAudio(muted)
+
+  useImagePreload(
+    [IMG.coverBrotherLarge, IMG.coverCeSoirLarge, IMG.coverMauvaisGarconLarge, IMG.coverLarge],
+    entered
+  )
 
   const found = SECRET_IDS.filter((id) => secrets[id]).length
   const allFound = found >= SECRET_IDS.length

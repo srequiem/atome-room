@@ -99,7 +99,7 @@ export const STRINGS = {
       access: 'Unlocks exclusive content, coming soon',
       edition: 'Night Edition',
       admit: 'ADMIT',
-      one: 'UN+',
+      one: 'ONE+',
     },
     overlay: {
       close: 'Close',

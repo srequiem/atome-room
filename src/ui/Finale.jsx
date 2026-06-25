@@ -17,18 +17,34 @@ const Finale = ({ onDismiss }) => {
     if (!ticketNumber) setTicketNumber(generateTicketNumber())
   }
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!svgRef.current) return
     const xml = new XMLSerializer().serializeToString(svgRef.current)
     const blob = new Blob([xml], { type: 'image/svg+xml;charset=utf-8' })
+    const fileName = `golden-ticket-atome-${ticketNumber}.svg`
+
+    // Web Share API — opens the native share/save sheet on iOS and Android
+    if (navigator.canShare) {
+      const file = new File([blob], fileName, { type: 'image/svg+xml' })
+      if (navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file] })
+          return
+        } catch (e) {
+          if (e.name === 'AbortError') return
+        }
+      }
+    }
+
+    // Fallback: anchor download (desktop + Android Chrome)
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `golden-ticket-atome-${ticketNumber}.svg`
+    a.download = fileName
     document.body.appendChild(a)
     a.click()
     a.remove()
-    URL.revokeObjectURL(url)
+    setTimeout(() => URL.revokeObjectURL(url), 100)
   }
 
   return (

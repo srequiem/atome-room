@@ -12,11 +12,11 @@ const MemoryCounter = ({ secrets, found, onFinalize }) => {
         ))}
       </span>
       <span className="counter__label">{t.counter.found} · {found}/{SECRET_IDS.length}</span>
-      {found >= SECRET_IDS.length && (
+      {/* {found >= SECRET_IDS.length && (
         <button className="counter__finalize" onClick={onFinalize}>
-          🎉
+          TODO
         </button>
-      )}
+      )} */}
     </div>
   )
 }
